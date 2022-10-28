@@ -108,13 +108,13 @@ menu.map((item) =>{
 console.log(categories);
 
 
-// Categori Buttons Create
+// Category Buttons Create
 
 categories.forEach(function(item){
     console.log(item);
     let btn = document.createElement('button');
     btn.className = 'btn btn-outline-dark btn-item';
-    btn.setAttribute('data-id', item.toLowerCase());
+    btn.setAttribute('data-id', item);
     btn.innerText = item;
     btnContainer.appendChild(btn);
 });
@@ -122,10 +122,62 @@ categories.forEach(function(item){
 // EventListeners
 
 btnContainer.addEventListener('click', function(e){
-    console.log(e.target.getAttribute('data-id'));
+    let cat = e.target.getAttribute('data-id');
+    console.log(cat);
+    menus(cat);
 });
 
 
+// Menus
+
+const menus = (cat = null) => {
+  let itemDom = "";
+
+  menu.forEach((item) => {
+
+    if(cat == item.category){
+        itemDom += `<div class="menu-items col-lg-6 col-sm-12 all ${item.category.toLowerCase()}">
+        <img
+          src=${item.img}
+          alt=${item.title}
+          class="photo"
+        />
+        <div class="menu-info">
+          <div class="menu-title">
+            <h4>${item.title}</h4>
+            <h4 class="price">${item.price}</h4>
+          </div>
+          <div class="menu-text">
+            ${item.desc}
+          </div>
+        </div>
+      </div>
+      `; 
+    } else if(cat == null || cat == "All"){
+      itemDom += `<div class="menu-items col-lg-6 col-sm-12 all ${item.category.toLowerCase()}">
+            <img
+              src=${item.img}
+              alt=${item.title}
+              class="photo"
+            />
+            <div class="menu-info">
+              <div class="menu-title">
+                <h4>${item.title}</h4>
+                <h4 class="price">${item.price}</h4>
+              </div>
+              <div class="menu-text">
+                ${item.desc}
+              </div>
+            </div>
+          </div>
+          `; 
+    }
+
+   
+  });
+  
+  section.innerHTML = itemDom;
+}
 
 
-
+menus();
